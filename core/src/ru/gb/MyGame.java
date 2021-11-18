@@ -9,12 +9,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class MyGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	Texture img2;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("game_front.jpg");
 
 	}
 
@@ -22,7 +21,7 @@ public class MyGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
-		batch.draw(img2, 0, 0);
+		batch.draw(img, 0, 0, Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
 // На весь экран
 //		Gdx.graphics.getHeight();
 //		Gdx.graphics.getWidth();
@@ -32,6 +31,5 @@ public class MyGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img2.dispose();
 	}
 }
