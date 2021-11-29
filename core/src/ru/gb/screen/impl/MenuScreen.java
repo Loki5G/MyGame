@@ -4,45 +4,56 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
+import ru.gb.math.Rect;
 import ru.gb.screen.BaseScreen;
+import ru.gb.sprite.Logo;
+import ru.gb.sprite.impl.Background;
 
 public class MenuScreen extends BaseScreen {
 
     private Texture img;
-    private Texture img2;
-    private Vector2 touch;
-    private Vector2 v;
+    private Texture hero;
+    private Vector2 pos;
+
+    private Background background;
+    private Logo logo;
 
     @Override
     public void show() {
         super.show();
         img = new Texture("game_front.jpg");
-        img2 = new Texture("hero.png");
-        touch = new Vector2();
-        v = new Vector2(1,1);
-//        v = v.cpy().scl(2);
+        hero = new Texture("hero.png");
+        background = new Background(img);
+        logo = new Logo (hero);
+    }
+
+    @Override
+    public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
+        background.resize(worldBounds);
+        logo.resize(worldBounds);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+        logo.update(delta);
         batch.begin();
-        batch.draw(img, 0, 0, Gdx.graphics.getWidth() ,Gdx.graphics.getHeight());
-        batch.draw(img2, touch.x, touch.y);
+        background.draw(batch);
+        logo.draw(batch);
         batch.end();
-        touch.add(v);
     }
 
     @Override
     public void dispose() {
         super.dispose();
         img.dispose();
-        img2.dispose();
+        hero.dispose();
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        touch.set(screenX, Gdx.graphics.getHeight()-screenY);
-        return super.touchDown(screenX, screenY, pointer, button);
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        logo.touchDown(touch, pointer, button);
+        return super.touchDown(touch, pointer, button);
     }
 }
